@@ -1,128 +1,113 @@
-# Ashmit Srivastava, portfolio
+# Ashmit Srivastava — Portfolio
 
-A static portfolio site built with plain HTML, CSS and JavaScript. No build step, no dependencies.
+### Final-Year Computer Science Engineering Student | Software Development | Data Analytics | AI
 
-## Files
+Hi! I'm **Ashmit Srivastava**, a final-year B.Tech Computer Science and Engineering student at **NIT Jalandhar**. I'm passionate about software development, data analytics, problem-solving, and building practical applications that solve real-world problems.
 
-```
-portfolio/
-├── index.html      Page markup (all sections)
-├── styles.css      Design tokens, layout, components, responsive rules
-├── script.js       Mobile menu, active-section highlight, footer year
-├── README.md
-└── assets/
-    ├── ashmit-480.webp / ashmit-800.webp   Hero portrait (WebP)
-    ├── ashmit-480.jpg  / ashmit-800.jpg    Hero portrait (JPEG fallback)
-    ├── Ashmit_Srivastava_Resume.pdf        Downloadable résumé
-    ├── almailem-group-480/800 (.webp, .jpg)  Photo shown in the Al Mailem Group experience
-    ├── xylofy-logo.webp                    XYlofy AI logo shown in the experience section
-    └── favicon.svg
-```
+I enjoy working with data, exploring AI-powered solutions, and developing projects that combine technical knowledge with practical applications.
 
-## Run locally
+## 🌐 Connect With Me
 
-Option A: open `index.html` in a browser. Everything works from the file system.
+- **Portfolio:** [ashmit-srivastava.netlify.app](https://ashmit-srivastava.netlify.app/)
+- **GitHub:** [CodeWithAshmit](https://github.com/CodeWithAshmit)
+- **Portfolio Repository:** [GitHub Repository](https://github.com/CodeWithAshmit/Portfolio)
+- **Email:** [ashmit.aarav6@gmail.com](mailto:ashmit.aarav6@gmail.com)
 
-Option B: serve it (closer to production):
+## 👨‍💻 About Me
 
-```bash
-cd portfolio
-python3 -m http.server 8000
-```
+- 🎓 Pursuing B.Tech in Computer Science and Engineering at NIT Jalandhar.
+- 💻 Interested in software engineering, AI, and data-driven applications.
+- 📊 Enjoy working with SQL, Python, data analysis, and visualization.
+- 🤖 Exploring Generative AI, machine learning, and intelligent applications.
+- 🧩 Continuously improving my problem-solving and data structures and algorithms skills.
+- 🚀 Focused on building projects that demonstrate practical engineering and analytical abilities.
 
-Then open http://localhost:8000.
+## 🛠️ Technical Skills
 
-The heading font (Bricolage Grotesque) loads from Google Fonts, so it needs an internet connection. Offline, the site falls back to the system sans-serif font and stays fully usable.
+**Programming Languages**
+- C, C++, Python, JavaScript, SQL
 
-## Deploy to GitHub Pages
+**Data Analytics & Visualization**
+- Pandas, NumPy, Matplotlib, Seaborn, Power BI, DAX, Excel
 
-1. Create a new repository on GitHub, for example `portfolio`.
-2. Upload the contents of this folder so that `index.html` sits at the **root** of the repository (not inside a subfolder).
-   - With Git:
-     ```bash
-     cd portfolio
-     git init
-     git add .
-     git commit -m "Add portfolio site"
-     git branch -M main
-     git remote add origin https://github.com/<your-username>/portfolio.git
-     git push -u origin main
-     ```
-3. In the repository, open **Settings > Pages**.
-4. Under **Build and deployment**, set **Source** to **Deploy from a branch**, choose branch **main** and folder **/ (root)**, then save.
-5. After a minute or two the site is live at `https://<your-username>.github.io/portfolio/`.
+**AI & Machine Learning**
+- Machine Learning, Scikit-learn, Generative AI, Retrieval-Augmented Generation (RAG)
 
-To use your root address (`https://<your-username>.github.io`), name the repository exactly `<your-username>.github.io`.
+**Web Development**
+- HTML, CSS, React.js, Streamlit
 
-All links in the site are relative, so it works under a `/portfolio/` sub-path without changes.
+**Databases & Tools**
+- MySQL, MongoDB, SQL Server, Git, GitHub, VS Code
 
-## Deploy to Netlify
+**Core Computer Science**
+- Data Structures and Algorithms, Object-Oriented Programming, DBMS, Operating Systems, Computer Networks
 
-**Drag and drop (fastest):**
-1. Go to https://app.netlify.com/drop.
-2. Drag the whole `portfolio` folder onto the page.
-3. Netlify gives you a live URL immediately. Rename it under **Site configuration > Change site name**.
+## 🚀 Featured Projects
 
-**From GitHub (auto-updates on every push):**
-1. Push the folder to a GitHub repository as above.
-2. In Netlify choose **Add new site > Import an existing project** and pick the repository.
-3. Leave the build command empty and set the publish directory to `.` (the repository root), then deploy.
+### 1. ResearchPilot — AI-Powered Research Assistant
+An AI-based research assistant that helps users explore PDF documents, retrieve relevant information, and generate context-aware answers using a Retrieval-Augmented Generation (RAG) pipeline.
 
-## Test locally in VS Code
+### 2. Sales Forecasting Dashboard
+An interactive analytics application for exploring sales performance, forecasting trends, identifying anomalies, and segmenting product demand.
 
-1. Open the `portfolio` folder in VS Code (**File > Open Folder**).
-2. Install the **Live Server** extension (by Ritwick Dey) if you do not have it.
-3. Right-click `index.html` and choose **Open with Live Server**. The site opens at http://127.0.0.1:5500 and reloads when you save a file.
-4. Before deploying, check: every nav link, the mobile menu (press F12, then the device toolbar icon, and pick a phone size), the résumé download, and the ResearchPilot GitHub button.
+**Highlights:** Sales overview, forecast exploration, anomaly detection, and product demand segmentation.
 
-## Update your existing Netlify site
+### 3. Power BI Sales Dashboard
+An interactive business intelligence dashboard designed to analyze sales performance, monitor revenue and profitability, and present business insights through visualizations.
 
-Your site is https://ashmit-srivastava.netlify.app/. Keep the same site so the address does not change.
+### 4. House Price Prediction
+A machine learning project focused on analyzing housing data and predicting property prices using data preprocessing, feature analysis, and predictive modeling.
 
-- **If you deployed by drag and drop:** open your site in Netlify, go to the **Deploys** tab, and drag the whole `portfolio` folder onto the "Drag and drop your site output folder here" area. It publishes a new version on the same address.
-- **If the site is connected to a GitHub repository:** replace the files in your local copy of that repository with these, then commit and push (`git add . && git commit -m "Upgrade portfolio" && git push`). Netlify redeploys automatically. Leave the build command empty and the publish directory as `.`.
+### 5. Employee Attrition Analysis
+A data analytics project exploring employee attrition patterns to identify trends and factors associated with workforce turnover.
 
-Hard-refresh the live page afterward (Ctrl+Shift+R on Windows, Cmd+Shift+R on Mac) so your browser does not show cached files.
+> Explore my portfolio for project details, available demos, and additional work.
 
-## Add the ResearchPilot live demo
+**[Visit My Portfolio →](https://ashmit-srivastava.netlify.app/)**
 
-The Live demo button is disabled on purpose, because no deployed URL exists yet. Once ResearchPilot is deployed (for example on Streamlit Community Cloud, Hugging Face Spaces or Render):
+## 💼 Experience
 
-1. Open `index.html` and search for `LIVE DEMO`.
-2. Replace the line `<button class="btn btn-demo" type="button" disabled>Live demo coming soon</button>` with the `<a>` shown in the comment above it, putting your real URL in `href`.
-3. Delete the comment, save, and redeploy.
+**Data Analyst Intern — XYlofy AI**  
+*June 2026 – July 2026 | Remote*
 
-## Project visuals
+- Cleaned and preprocessed datasets using Python, Pandas, and SQL.
+- Performed exploratory data analysis to identify patterns and insights.
+- Developed Power BI dashboards for data-driven reporting.
+- Worked on analytics and machine learning projects, including house price prediction, employee attrition analysis, and sales forecasting.
 
-The Power BI Sales Dashboard and Sales Forecasting Dashboard each have a tabbed **layout sketch**. These are simple drawings of the structure named in your résumé (KPIs, slicers, drill-through, and the four forecasting modules). They contain no data and are labeled "not a screenshot" on the page.
+**Junior IT Intern — AlMailem Group**  
+*June 2025 – July 2025 | Kuwait*
 
-To replace a sketch with a real screenshot:
+- Gained practical exposure to hardware and software troubleshooting.
+- Worked with Windows installation and configuration.
+- Learned networking fundamentals, IP addressing, DHCP, DNS, and firewall basics.
+- Developed foundational knowledge of SQL and IT infrastructure.
 
-1. Export the screenshot (PNG or JPEG, about 1200 px wide) and save it in `assets/`, for example `assets/powerbi-kpis.jpg`.
-2. In `index.html`, find the tab panel you want (for example `id="pb-panel-1"`) and replace its `<svg>...</svg>` with:
-   ```html
-   <button class="photo-button" type="button" data-lightbox
-           data-full="assets/powerbi-kpis.jpg"
-           data-alt="Describe what the screenshot shows"
-           data-caption="Power BI sales dashboard, KPI page">
-     <img src="assets/powerbi-kpis.jpg" width="1200" height="675" alt="Describe what the screenshot shows" loading="lazy">
-   </button>
-   ```
-   Clicking it opens the same enlarge viewer used for the Al Mailem Group photo.
-3. Update the figure caption ("Layout sketch of the structure, not a screenshot") to match.
+## 🏆 Achievements
 
-## Things to update later
+- 🏏 Winner — NIT Jalandhar Super 10 Cricket.
+- 🥈 Runner-up — Inter-Branch Cricket Competition.
+- 🚀 Participated in the Hydro Rocketry competition at IIT Delhi (TRYST), clearing two rounds of the on-the-spot environmental solution challenge.
+- 📈 Qualified among the top 15 participants in a quiz organized by IIT Delhi.
 
-- **Website icon:** the globe icon links to https://ashmit-srivastava.netlify.app/ (the address in your résumé). If you move to a custom domain, update that link in `index.html`.
-- **House Price Prediction and Employee Attrition Analysis:** your résumé has no repository links for these two, so they have none here. To add one, copy the `text-link` block from the Power BI project in `index.html` into the project's `project-body`.
-- **Résumé:** replace `assets/Ashmit_Srivastava_Resume.pdf` with a newer PDF, keeping the same file name, and every download button picks it up.
-- **Photos:** replace the four files in `assets/` named `ashmit-*` for the hero portrait (keep a 3:4 ratio), or `almailem-group-*` for the experience photo.
-- **Colors:** the lime accent and background colors are variables at the top of `styles.css` (`--lime`, `--bg`, and so on).
+## 📜 Certifications & Professional Learning
 
-## Notes on accessibility and performance
+- Anthropic — AI Fluency: Framework Foundations.
+- Deloitte — Forage Job Simulation.
+- British Airways — Forage Job Simulation.
 
-- Semantic landmarks (`header`, `nav`, `main`, `section`, `footer`), a skip link and visible keyboard focus styles.
-- The mobile menu is a real button with `aria-expanded`; it closes on link click, Escape, or a click outside it, and its links are not focusable while it is closed.
-- Icon-only links carry accessible names; external links announce that they open in a new tab.
-- The hero portrait is served as WebP with a JPEG fallback in two sizes (about 40 to 100 KB for WebP).
-- Animation: a staggered slide-in on the hero, scroll-triggered slide reveals (Intersection Observer), hover and focus feedback, and two small floating shapes in the hero that pause when off screen. Reveals are added by JavaScript, so without JavaScript every section is simply visible. Visitors who prefer reduced motion get no movement at all.
+## 🎯 Current Focus
+
+I'm focused on strengthening my software engineering fundamentals, solving DSA problems, improving my analytical skills, and building practical AI-powered applications as I prepare for software engineering and data-focused opportunities.
+
+## 📫 Let's Connect
+
+I'm always interested in learning, collaborating on interesting projects, and connecting with people working in software engineering, data analytics, and AI.
+
+- **Portfolio:** [Explore My Work](https://ashmit-srivastava.netlify.app/)
+- **GitHub:** [View My Repositories](https://github.com/CodeWithAshmit)
+- **Email:** [Get in Touch](mailto:ashmit.aarav6@gmail.com)
+
+---
+
+*Thanks for visiting my profile!*
