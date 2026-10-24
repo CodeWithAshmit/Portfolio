@@ -81,6 +81,82 @@
     }
   }
 
+  /* ----- Header shadow once the page has scrolled ----- */
+  if (header) {
+    var ticking = false;
+    var onScroll = function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        header.classList.toggle('is-scrolled', window.scrollY > 8);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* ----- Pause the hero's floating shapes while the hero is off screen (saves battery) ----- */
+  var heroEl = document.getElementById('home');
+  if (heroEl && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      heroEl.classList.toggle('is-paused', !entries[0].isIntersecting);
+    }).observe(heroEl);
+  }
+
+  /* ----- Scroll reveal (slide-up / slide-left / slide-right) -----
+     Classes are added here, not in the HTML, so everything stays visible if this script
+     fails or the visitor prefers reduced motion. */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if ('IntersectionObserver' in window && !reduceMotion.matches) {
+    var REVEALS = [
+      ['.section-title', 'left'],
+      ['#about .section-body', 'up'],
+      ['.edu-row', 'up'],
+      ['.job', 'up'],
+      ['.project', 'up'],
+      ['.pipeline li', 'up'],
+      ['.skill-row', 'up'],
+      ['#achievements .split > div:first-child', 'left'],
+      ['#achievements .split > div:last-child', 'right'],
+      ['.contact-lead', 'up'],
+      ['.contact-list li', 'up'],
+      ['#contact .section-body > .btn', 'up']
+    ];
+
+    var revealObserver = new IntersectionObserver(function (entries, obs) {
+      var batch = entries.filter(function (entry) { return entry.isIntersecting; });
+      batch.forEach(function (entry, index) {
+        var el = entry.target;
+        var delay = Math.min(index * 90, 360);   // stagger items that arrive together
+        el.style.transitionDelay = delay + 'ms';
+        el.classList.add('is-revealed');
+        obs.unobserve(el);
+        // When the transition ends, give the element back to its normal styles (hover effects, etc.).
+        window.setTimeout(function () {
+          el.classList.remove('reveal', 'is-revealed');
+          el.removeAttribute('data-dir');
+          el.style.transitionDelay = '';
+        }, delay + 800);
+      });
+    }, { rootMargin: '0px 0px -5% 0px', threshold: 0.08 });
+
+    REVEALS.forEach(function (rule) {
+      Array.prototype.forEach.call(document.querySelectorAll(rule[0]), function (el) {
+        el.classList.add('reveal');
+        el.setAttribute('data-dir', rule[1]);
+        revealObserver.observe(el);
+      });
+    });
+
+    // Printing should never include hidden content.
+    window.addEventListener('beforeprint', function () {
+      Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function (el) {
+        el.classList.add('is-revealed');
+      });
+    });
+  }
+
   /* ----- Tabbed project sketches (arrow keys, Home and End supported) ----- */
   Array.prototype.forEach.call(document.querySelectorAll('[data-tabs]'), function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));

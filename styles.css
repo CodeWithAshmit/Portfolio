@@ -40,6 +40,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
@@ -239,8 +240,43 @@ a.icon-btn:hover,
 
 /* ---------- Hero ---------- */
 .hero {
+  position: relative;
+  overflow: clip;
   padding-block: clamp(40px, 7vw, 96px) clamp(64px, 9vw, 120px);
+  background:
+    radial-gradient(58% 55% at 88% 38%, rgba(198, 244, 50, 0.085), transparent 70%),
+    radial-gradient(40% 40% at 4% 0%, rgba(198, 244, 50, 0.045), transparent 70%);
 }
+.hero > .container { position: relative; z-index: 1; }
+
+/* Decorative shapes: transform-only motion, paused when the hero is off screen */
+.hero-deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.deco { position: absolute; display: block; }
+.deco-ring {
+  width: 72px; height: 72px;
+  top: 12%; right: 6%;
+  border: 1.5px solid var(--lime);
+  border-radius: 50%;
+  opacity: 0.45;
+  animation: float-a 9s ease-in-out infinite alternate;
+}
+.deco-square {
+  width: 16px; height: 16px;
+  bottom: 16%; right: 44%;
+  background: var(--lime);
+  border-radius: 4px;
+  opacity: 0.5;
+  animation: float-b 7s ease-in-out infinite alternate;
+}
+.deco-dots {
+  width: 144px; height: 108px;
+  bottom: 9%; left: 2.5%;
+  background-image: radial-gradient(var(--line-strong) 1.5px, transparent 1.7px);
+  background-size: 18px 18px;
+}
+@keyframes float-a { from { transform: translate3d(0, 0, 0) rotate(0deg); } to { transform: translate3d(-10px, -18px, 0) rotate(24deg); } }
+@keyframes float-b { from { transform: translate3d(0, 0, 0) rotate(0deg); } to { transform: translate3d(14px, -16px, 0) rotate(45deg); } }
+.hero.is-paused .deco { animation-play-state: paused; }
 
 .hero-grid {
   display: grid;
@@ -298,21 +334,22 @@ a.icon-btn:hover,
   border-radius: var(--radius);
 }
 
-/* One orchestrated entrance on load. Nothing else animates by itself. */
-@keyframes rise {
-  from { opacity: 0; transform: translateY(18px); }
+/* Hero entrance on load: text slides in from the left, the portrait from the right, staggered. */
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-32px); }
   to   { opacity: 1; transform: none; }
 }
-.hero-copy > *,
-.portrait {
-  animation: rise 0.8s var(--ease) both;
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: none; }
 }
+.hero-copy > * { animation: slide-in-left 0.75s var(--ease) both; }
 .hero-copy > :nth-child(1) { animation-delay: 0.05s; }
 .hero-copy > :nth-child(2) { animation-delay: 0.15s; }
 .hero-copy > :nth-child(3) { animation-delay: 0.28s; }
-.hero-copy > :nth-child(4) { animation-delay: 0.38s; }
-.hero-copy > :nth-child(5) { animation-delay: 0.48s; }
-.portrait { animation-delay: 0.3s; }
+.hero-copy > :nth-child(4) { animation-delay: 0.42s; }   /* call-to-action buttons */
+.hero-copy > :nth-child(5) { animation-delay: 0.54s; }   /* contact icons */
+.portrait { animation: slide-in-right 0.9s var(--ease) 0.25s both; }
 
 /* ---------- Section layout ---------- */
 .section {
@@ -427,14 +464,108 @@ a.icon-btn:hover,
 }
 
 /* ---------- Projects ---------- */
+@property --angle { syntax: "<angle>"; initial-value: 135deg; inherits: false; }
+
+.projects-list { display: flex; flex-direction: column; gap: 24px; }
+
 .project {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-  gap: 16px clamp(24px, 4vw, 56px);
-  padding: 40px 0;
-  border-top: 1px solid var(--line);
+  position: relative;
+  padding: clamp(22px, 3.2vw, 36px);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.project:first-child { padding-top: 0; border-top: 0; }
+.project:hover,
+.project:focus-within {
+  transform: translateY(-4px);
+  border-color: rgba(198, 244, 50, 0.45);
+  box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.95);
+}
+.project-head { margin-bottom: 20px; }
+
+.project-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.project-pair .project { height: 100%; }
+
+/* Newest project: larger, with a gradient border that turns on hover or focus */
+.project-featured {
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid transparent;
+  background:
+    radial-gradient(520px 220px at 0% 0%, rgba(198, 244, 50, 0.1), transparent 70%) padding-box,
+    linear-gradient(var(--bg-raised), var(--bg-raised)) padding-box,
+    conic-gradient(from var(--angle), var(--line-strong) 0deg, var(--lime) 70deg, var(--line-strong) 150deg, var(--line-strong) 360deg) border-box;
+  animation: border-turn 6s linear infinite paused;
+}
+.project-featured:hover,
+.project-featured:focus-within {
+  border-color: transparent;
+  animation-play-state: running;
+  box-shadow: 0 28px 56px -30px rgba(0, 0, 0, 0.95), 0 0 48px -24px rgba(198, 244, 50, 0.4);
+}
+@keyframes border-turn { to { --angle: 495deg; } }
+
+.project-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--lime);
+}
+.project-badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); }
+.project-featured .project-head h3 { font-size: clamp(1.625rem, 1.3rem + 1.4vw, 2.375rem); }
+.project-lead { max-width: 40rem; margin-bottom: 28px; font-size: var(--step-1); line-height: 1.5; }
+
+/* How ResearchPilot works: a real sequence, so the numbering is meaningful */
+.pipeline { margin: 0 0 28px; counter-reset: step; }
+.pipeline li {
+  position: relative;
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: 16px;
+  padding-bottom: 18px;
+}
+.pipeline li:last-child { padding-bottom: 0; }
+.pipeline li::before {
+  content: counter(step);
+  grid-row: 1 / span 2;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--lime);
+  background: var(--bg-raised);
+  border: 1.5px solid var(--lime);
+  border-radius: 50%;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.pipeline li::after {
+  content: "";
+  position: absolute;
+  left: 15px; top: 32px; bottom: 0;
+  width: 1px;
+  background: var(--line-strong);
+}
+.pipeline li:last-child::after { display: none; }
+.pipeline li:hover::before { background: var(--lime); color: var(--lime-ink); }
+.pipeline-title { grid-column: 2; padding-top: 4px; font-weight: 600; line-height: 1.4; }
+.pipeline-text { grid-column: 2; color: var(--muted); }
+
+.project-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn-demo {
+  color: var(--muted);
+  background: transparent;
+  border: 1.5px dashed var(--line-strong);
+  cursor: not-allowed;
+}
+.btn-demo:hover { transform: none; }
+.btn:active { transform: translateY(0); }
 
 .project-head h3 {
   font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
@@ -688,10 +819,24 @@ html.lightbox-open { overflow: hidden; }
 .sk-pill { fill: none; stroke: var(--line-strong); }
 .sk-pill-on { fill: var(--lime); }
 
+/* ---------- Header state on scroll ---------- */
+.site-header { transition: background-color 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+.site-header.is-scrolled {
+  background: rgba(15, 17, 14, 0.95);
+  box-shadow: 0 12px 32px -22px rgba(0, 0, 0, 0.9);
+}
+
+/* ---------- Scroll reveal ----------
+   script.js adds .reveal and data-dir. Without JavaScript nothing is hidden. */
+.reveal { opacity: 0; transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal[data-dir="up"]    { transform: translateY(28px); }
+.reveal[data-dir="left"]  { transform: translateX(-28px); }
+.reveal[data-dir="right"] { transform: translateX(28px); }
+.reveal.is-revealed { opacity: 1; transform: none; }
+
 /* ---------- Tablet ---------- */
 @media (max-width: 1000px) {
   .section-grid { grid-template-columns: minmax(150px, 200px) minmax(0, 1fr); }
-  .project { grid-template-columns: 1fr; }
   .skill-row { grid-template-columns: 1fr; gap: 10px; }
   .skill-row dt { padding-top: 0; }
 }
@@ -721,6 +866,15 @@ html.lightbox-open { overflow: hidden; }
   }
   .nav-list { flex-direction: column; align-items: stretch; gap: 0; }
   .nav li + li { border-top: 1px solid var(--line); }
+  .nav li { opacity: 0; transform: translateY(-6px); transition: opacity 0.25s var(--ease), transform 0.25s var(--ease); }
+  .nav.is-open li { opacity: 1; transform: none; }
+  .nav.is-open li:nth-child(1) { transition-delay: 0.04s; }
+  .nav.is-open li:nth-child(2) { transition-delay: 0.08s; }
+  .nav.is-open li:nth-child(3) { transition-delay: 0.12s; }
+  .nav.is-open li:nth-child(4) { transition-delay: 0.16s; }
+  .nav.is-open li:nth-child(5) { transition-delay: 0.2s; }
+  .nav.is-open li:nth-child(6) { transition-delay: 0.24s; }
+  .nav.is-open li:nth-child(7) { transition-delay: 0.28s; }
   .nav a { display: block; padding: 16px 0; font-size: var(--step-1); }
   .nav a::after { display: none; }
   .nav a[aria-current="true"] { color: var(--lime); }
@@ -737,6 +891,16 @@ html.lightbox-open { overflow: hidden; }
   .edu-row:hover { padding-left: 0; }
 
   .split { grid-template-columns: 1fr; }
+
+  .reveal[data-dir="up"]    { transform: translateY(20px); }
+  .reveal[data-dir="left"]  { transform: translateX(-16px); }
+  .reveal[data-dir="right"] { transform: translateX(16px); }
+  .deco-dots { display: none; }
+  .deco-ring { width: 52px; height: 52px; top: 5%; right: 8%; }
+}
+
+@media (max-width: 600px) {
+  .project-pair { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
@@ -754,7 +918,10 @@ html.lightbox-open { overflow: hidden; }
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
   }
-  .btn:hover, a.icon-btn:hover, .contact-item:hover .icon-btn, .chips li:hover, .photo-button:hover img { transform: none; }
+  .btn:hover, a.icon-btn:hover, .contact-item:hover .icon-btn, .chips li:hover, .photo-button:hover img, .project:hover, .project:focus-within { transform: none; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .deco, .project-featured { animation: none !important; }
+  .nav li { opacity: 1; transform: none; }
 }
 
 /* ---------- Touch devices: no hover, so keep the Enlarge hint visible ---------- */
